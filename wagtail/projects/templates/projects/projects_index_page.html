@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block content %}
+<div style="max-width: 1000px; margin: auto; padding: 2rem; font-family: sans-serif;">
+
+    <h1 style="font-size: 2.5rem; font-weight: bold;">{{ page.title }}</h1>
+
+    {% if page.intro %}
+        <p style="margin: 1rem 0 2rem; font-size: 1.2rem;">{{ page.intro|richtext }}</p>
+    {% endif %}
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem;">
+        {% for project in page.get_children.live %}
+            {% with project.specific as item %}
+            <div style="border: 1px solid #ddd; border-radius: 8px; overflow: hidden; padding: 1rem;">
+                {% if item.banner_image %}
+                    {% image item.banner_image fill-600x300 as img %}
+                    <img src="{{ img.url }}" alt="{{ img.alt }}" style="width: 100%; height: auto;" />
+                {% endif %}
+                <h2 style="margin-top: 1rem;">
+                    <a href="{{ item.url }}" style="text-decoration: none; color: #222;">
+                        {{ item.title }}
+                    </a>
+                </h2>
+                <p>{{ item.description|striptags|truncatewords:30 }}</p>
+                <div style="margin-top: 1rem;">
+                    {% if item.github_url %}
+                        <a href="{{ item.github_url|striptags }}" target="_blank">GitHub</a>
+                    {% endif %}
+                    {% if item.demo_url %}
+                        | <a href="{{ item.demo_url|striptags }}" target="_blank">Live Demo</a>
+                    {% endif %}
+                </div>
+            </div>
+            {% endwith %}
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
