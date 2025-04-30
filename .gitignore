@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+*.log
+
+# Django
+*.db
+.env
+.env.*
+local_settings.py
+
+# Wagtail/Django
+/media/
+/static/
+.migrations/
+
+# OS + editor junk
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Docker
+*.pid
+*.sock
+
+wag_env/
